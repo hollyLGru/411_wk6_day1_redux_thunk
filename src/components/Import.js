@@ -1,9 +1,30 @@
-import React from 'react'
-import { Container, Button, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import  React from 'react'
+import { Container,
+	 Button,
+	  Table, 
+	  TableBody, 
+	  TableCell, 
+	  TableHead, 
+	  TableRow, 
+	  Menu, 
+	  MenuItem } from '@material-ui/core';
 import { MoreVert } from '@material-ui/icons';
 
+
 const Import = (props) => {
-    // fill out this component
+	
+	const [anchorEl, setAnchorEl] = React.useState(null);
+	const open = Boolean(anchorEl);
+	const handleClick = (event) => {
+	  setAnchorEl(event.currentTarget);
+	};
+	const handleClose = () => {
+	  setAnchorEl(null);
+	};
+	const handleDelete = () => {
+		props.deleteMake();
+		setAnchorEl(null);
+	};
 
     return (
         <Container>
@@ -23,11 +44,29 @@ const Import = (props) => {
 				<TableRow key={index}>
 					<TableCell>{make.MakeId}</TableCell>
 					<TableCell>{make.MakeName}</TableCell>
-					<TableCell><MoreVert/></TableCell>
+					<TableCell>
+							<MoreVert
+							id="basic-button"
+							aria-controls={open ? 'basic-menu' : undefined}
+							aria-haspopup="true"
+							aria-expanded={open ? 'true' : undefined}
+							onClick={handleClick}/>
+					</TableCell>
 				</TableRow>
                         ))}
 		</TableBody>
 			</Table>
+			<Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={handleDelete}>DELETE</MenuItem>
+      </Menu>
         </Container>
     )
 }
